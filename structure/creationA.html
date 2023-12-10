@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un Auteur</title>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/books">All Books</a></li>
+            <li><a href="/authors">All Authors</a></li>
+            <li><a href="/authorsSchema">Create new author</a></li>
+            <li><a href="/create-books">Create new book</a></li>
+        </ul>
+    </nav>
+    <h1>Créer un Auteur</h1>
+    <form id="authorForm">
+        <label for="firstName">Prénom :</label>
+        <input type="text" id="firstName" name="firstName" required>
+
+        <label for="lastName">Nom de Famille :</label>
+        <input type="text" id="lastName" name="lastName" required>
+
+        <label for="dateOfBirth">Date de Naissance :</label>
+        <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+
+        <button type="button" onclick="createAuthor()">Créer l'Auteur</button>
+    </form>
+
+    <script>
+        async function createAuthor() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const dateOfBirth = document.getElementById('dateOfBirth').value;
+
+            const response = await fetch('http://localhost:3000/authors', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    firstName,
+                    lastName,
+                    dateOfBirth,
+                }),
+            });
+
+            if (response.ok) {
+                alert('Auteur créé avec succès !');
+            } else {
+                alert('Erreur lors de la création de l\'auteur.');
+            }
+        }
+    </script>
+</body>
+
+</html>

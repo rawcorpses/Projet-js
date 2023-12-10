@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un Auteur</title>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/books">All Books</a></li>
+            <li><a href="/authors">All Authors</a></li>
+            <li><a href="/authorsSchema">Create new author</a></li>
+            <li><a href="/create-books">Create new book</a></li>
+        </ul>
+    </nav>
+    <h1>Créer un Auteur</h1>
+    <form id="bookForm">
+        <label for="title">Titre :</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="author">Auteur :</label>
+        <input type="text" id="author" name="author" required>
+
+        <label for="summary">Résumé :</label>
+        <textarea id="summary" name="summary" required></textarea>
+
+        <label for="isbn">ISBN :</label>
+        <input type="text" id="isbn" name="isbn" required>
+
+        <button type="button" onclick="createBook()">Créer le Livre</button>
+    </form>
+
+    <script>
+        async function createBook() {
+            const title = document.getElementById('title').value;
+            const author = document.getElementById('author').value;
+            const summary = document.getElementById('summary').value;
+            const isbn = document.getElementById('isbn').value;
+
+            const response = await fetch('http://localhost:3000/books', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title,
+                    author,
+                    summary,
+                    isbn,
+                }),
+            });
+
+            if (response.ok) {
+                alert('Livre créé avec succès !');
+            } else {
+                alert('Erreur lors de la création du livre.');
+            }
+        }
+    </script>
+</body>
+
+</html>
